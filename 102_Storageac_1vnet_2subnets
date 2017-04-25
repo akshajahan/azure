@@ -1,0 +1,61 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnet_Name": {
+            "defaultValue": "SINet",
+            "type": "String"
+        },
+        "SA_name": {
+            "defaultValue": "SAname_prefrred_unique",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "this is created for automation project.",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('vnet_Name')]",
+            "apiVersion": "2016-03-30",
+            "location": "southindia",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.30.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "Webnet",
+                        "properties": {
+                            "addressPrefix": "10.30.1.0/24"
+                        }
+                    },
+                    {
+                        "name": "Internalnet",
+                        "properties": {
+                            "addressPrefix": "10.30.2.0/24"
+                        }
+                    }
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "This is created for automation project.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('SA_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "southeastasia",
+            "tags": {},
+            "properties": {},
+            "dependsOn": []
+        }
+    ]
+}
